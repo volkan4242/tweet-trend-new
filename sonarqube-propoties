@@ -1,5 +1,5 @@
 sonar.verbose=true
-sonar.organization=volkan01
+sonar.organization=volkan
 sonar.projectKey=volkan01_twitertrend
 sonar.projectName=twitertrend
 sonar.language=java
