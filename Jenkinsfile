@@ -1,4 +1,6 @@
- def registry = 'https://volkandogan.jfrog.io'
+def registry = 'https://volkandogan.jfrog.io'
+def imageName = 'volkandogan.jfrog.io/volkan-docker-local/ttrend'
+def version = '2.1.2'
 
 pipeline {
     agent {
@@ -67,6 +69,28 @@ pipeline {
                     buildInfo.env.collect()
                     server.publishBuildInfo(buildInfo)
                     echo '<--------------- Jar Publish Ended --------------->'
+                }
+            }
+        }
+
+        stage("Docker Build") {
+            steps {
+                script {
+                    echo '<--------------- Docker Build Started --------------->'
+                    def app = docker.build(imageName + ":" + version)
+                    echo '<--------------- Docker Build Ended --------------->'
+                }
+            }
+        }
+
+        stage("Docker Publish") {
+            steps {
+                script {
+                    echo '<--------------- Docker Publish Started --------------->'
+                    docker.withRegistry(registry, 'artcf') {
+                        app.push()
+                    }
+                    echo '<--------------- Docker Publish Ended --------------->'
                 }
             }
         }
