@@ -2,6 +2,8 @@ def registry = 'https://volkandogan.jfrog.io'
 def imageName = 'volkandogan.jfrog.io/volkan-docker-local/ttrend'
 def version = '2.1.2'
 
+def app // Define app variable here
+
 pipeline {
     agent {
         node {
@@ -77,7 +79,7 @@ pipeline {
             steps {
                 script {
                     echo '<--------------- Docker Build Started --------------->'
-                    def app = docker.build(imageName + ":" + version)
+                    app = docker.build(imageName + ":" + version)
                     echo '<--------------- Docker Build Ended --------------->'
                 }
             }
